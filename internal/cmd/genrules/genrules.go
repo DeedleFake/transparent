@@ -1,11 +1,23 @@
 package main
 
 import (
+	"bytes"
+	_ "embed"
 	"encoding/json"
+	"flag"
 	"fmt"
+	"go/format"
 	"io"
+	"log/slog"
 	"net/http"
+	"os"
+	"text/template"
 )
+
+//go:embed output.tmpl
+var outputSource string
+
+var tmpl = template.Must(template.New("output").Parse(outputSource))
 
 type Provider struct {
 	URLPattern        string   `json:"urlPattern"`
@@ -44,12 +56,48 @@ func GetRules() (map[string]Provider, error) {
 }
 
 func main() {
-	rules, err := GetRules()
-	if err != nil {
-		panic(err)
+	pkgname := flag.String("package", "rules", "package name of output file")
+	outpath := flag.String("out", "", "path to output file or blank for stdout")
+	flag.Parse()
+
+	out := os.Stdout
+	if *outpath != "" {
+		file, err := os.Create(*outpath)
+		if err != nil {
+			slog.Error("create output file", "err", err)
+			os.Exit(1)
+		}
+		defer file.Close()
+		out = file
 	}
 
-	for p := range rules {
-		fmt.Printf("%q\n", p)
+	providers, err := GetRules()
+	if err != nil {
+		slog.Error("get rules", "err", err)
+		os.Exit(1)
+	}
+
+	var buf bytes.Buffer
+
+	data := map[string]any{
+		"Package":   *pkgname,
+		"Providers": providers,
+	}
+	err = tmpl.Execute(&buf, data)
+	if err != nil {
+		slog.Error("generate output", "err", err)
+		os.Exit(1)
+	}
+
+	output, err := format.Source(buf.Bytes())
+	if err != nil {
+		slog.Error("format output", "err", err)
+		os.Exit(1)
+	}
+
+	_, err = out.Write(output)
+	if err != nil {
+		slog.Error("write output", "err", err)
+		os.Exit(1)
 	}
 }
