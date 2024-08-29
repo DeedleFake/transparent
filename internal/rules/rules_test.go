@@ -11,8 +11,7 @@ var testProvider = rules.Provider{
 	URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?9gag\.com`),
 	CompleteProvider: false,
 	Rules:            []*regexp.Regexp{regexp.MustCompile(`^ref$`)},
-
-	Exceptions: []*regexp.Regexp{regexp.MustCompile(`^https?:\/\/comment-cdn\.9gag\.com\/.*?comment-list.json\?`)},
+	Exceptions:       []*regexp.Regexp{regexp.MustCompile(`^https?:\/\/comment-cdn\.9gag\.com\/.*?comment-list.json\?`)},
 }
 
 func TestClear(t *testing.T) {

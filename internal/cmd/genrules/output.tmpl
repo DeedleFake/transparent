@@ -11,12 +11,12 @@ var Providers = []Provider{
 		{
 			URLPattern: regexp.MustCompile(`{{.URLPattern}}`),
 			CompleteProvider: {{.CompleteProvider}},
-			{{with .Rules}}Rules: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`^{{.}}$`),{{end}} },{{end}}
-			{{with .RawRules}}RawRules: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{end}}
-			{{with .ReferralMarketing}}ReferralMarketing: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{end}}
-			{{with .Exceptions}}Exceptions: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{end}}
-			{{with .Redirections}}Redirections: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{end}}
-			{{with .ForceRedirection}}ForceRedirection: {{.}},{{end}}
+			{{with .Rules}}Rules: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`^{{.}}$`),{{end}} },{{"\n"}}{{end}}
+			{{- with .RawRules}}RawRules: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{"\n"}}{{end}}
+			{{- with .ReferralMarketing}}ReferralMarketing: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{"\n"}}{{end}}
+			{{- with .Exceptions}}Exceptions: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{"\n"}}{{end}}
+			{{- with .Redirections}}Redirections: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{"\n"}}{{end}}
+			{{- with .ForceRedirection}}ForceRedirection: {{.}},{{end}}
 		},
-	{{end -}}
+	{{- end}}
 }
