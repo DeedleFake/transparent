@@ -18,13 +18,13 @@ type Provider struct {
 	ForceRedirection  bool
 }
 
-func (p *Provider) Clear(value string) (string, bool) {
+func (p *Provider) Clear(value string) (cleared string, changed bool) {
 	if !p.URLPattern.MatchString(value) {
 		return value, false
 	}
 	for _, exception := range p.Exceptions {
 		if exception.MatchString(value) {
-			return value, true
+			return value, false
 		}
 	}
 
@@ -33,18 +33,21 @@ func (p *Provider) Clear(value string) (string, bool) {
 	}
 
 	for _, rule := range p.RawRules {
+		old := value
 		value = rule.ReplaceAllLiteralString(value, "")
+		changed = changed || value != old
 	}
 
 	parsed, err := url.Parse(value)
 	if err != nil {
-		return value, true
+		return value, changed
 	}
 
 	for _, rule := range p.Rules {
 		query := parsed.Query()
 		for k := range query {
 			if rule.MatchString(k) {
+				changed = true
 				query.Del(k)
 			}
 		}
@@ -53,5 +56,5 @@ func (p *Provider) Clear(value string) (string, bool) {
 		// TODO: Handle fragments, too.
 	}
 
-	return parsed.String(), true
+	return parsed.String(), changed
 }
