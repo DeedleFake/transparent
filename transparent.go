@@ -7,11 +7,15 @@ import "deedles.dev/transparent/internal/rules"
 // originally passed URL and false are returned.
 //
 // If url is not a valid URL, the results are undefined.
-func Clear(url string) (string, bool) {
+func Clear(url string) (cleared string, changed bool) {
 	for _, provider := range rules.Providers {
-		if url, ok := provider.Clear(url); ok {
-			return url, true
+		if url == "" {
+			return url, changed
 		}
+
+		cleared, ok := provider.Clear(url)
+		url = cleared
+		changed = changed || ok
 	}
-	return url, false
+	return url, changed
 }
