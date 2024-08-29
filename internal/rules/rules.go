@@ -2,7 +2,10 @@ package rules
 
 //go:generate go run deedles.dev/transparent/internal/cmd/genrules -out rules_gen.go
 
-import "regexp"
+import (
+	"net/url"
+	"regexp"
+)
 
 type Provider struct {
 	URLPattern        *regexp.Regexp
@@ -15,17 +18,40 @@ type Provider struct {
 	ForceRedirection  bool
 }
 
-func (p *Provider) Clear(url string) string {
-	if !p.URLPattern.MatchString(url) {
-		return url
+func (p *Provider) Clear(value string) (string, bool) {
+	if !p.URLPattern.MatchString(value) {
+		return value, false
 	}
+	for _, exception := range p.Exceptions {
+		if exception.MatchString(value) {
+			return value, true
+		}
+	}
+
 	if p.CompleteProvider {
-		return ""
+		return "", true
+	}
+
+	for _, rule := range p.RawRules {
+		value = rule.ReplaceAllLiteralString(value, "")
+	}
+
+	parsed, err := url.Parse(value)
+	if err != nil {
+		return value, true
 	}
 
 	for _, rule := range p.Rules {
-		url = rule.ReplaceAllString(url, "")
+		query := parsed.Query()
+		for k := range query {
+			if rule.MatchString(k) {
+				query.Del(k)
+			}
+		}
+		parsed.RawQuery = query.Encode()
+
+		// TODO: Handle fragments, too.
 	}
 
-	return url
+	return parsed.String(), true
 }
