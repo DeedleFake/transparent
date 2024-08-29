@@ -11,7 +11,7 @@ var Providers = []Provider{
 		{
 			URLPattern: regexp.MustCompile(`{{.URLPattern}}`),
 			CompleteProvider: {{.CompleteProvider}},
-			{{with .Rules}}Rules: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`(?:&amp;|[/?#&])(?:{{.}}=[^&]*)`),{{end}} },{{end}}
+			{{with .Rules}}Rules: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`^{{.}}$`),{{end}} },{{end}}
 			{{with .RawRules}}RawRules: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{end}}
 			{{with .ReferralMarketing}}ReferralMarketing: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{end}}
 			{{with .Exceptions}}Exceptions: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{end}}
