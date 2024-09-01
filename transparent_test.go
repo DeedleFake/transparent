@@ -16,3 +16,10 @@ func TestClear(t *testing.T) {
 		t.Fatalf("%q -> %q", before, after)
 	}
 }
+
+func BenchmarkClear(b *testing.B) {
+	const url = "https://x.com/user/status/12389123719273?t=klasdhklashdask&s=33"
+	for range b.N {
+		_, _ = transparent.Clear(url)
+	}
+}
