@@ -42,19 +42,19 @@ func (p *Provider) Clear(value string) (cleared string, changed bool) {
 	if err != nil {
 		return value, changed
 	}
+	query := parsed.Query()
 
 	for _, rule := range p.Rules {
-		query := parsed.Query()
 		for k := range query {
 			if rule.MatchString(k) {
 				changed = true
 				query.Del(k)
 			}
 		}
-		parsed.RawQuery = query.Encode()
 
 		// TODO: Handle fragments, too.
 	}
 
+	parsed.RawQuery = query.Encode()
 	return parsed.String(), changed
 }
