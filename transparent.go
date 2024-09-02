@@ -1,7 +1,10 @@
 package transparent
 
 import (
+	"iter"
 	"net/url"
+	"regexp"
+	"slices"
 
 	"deedles.dev/transparent/internal/rules"
 )
@@ -16,16 +19,9 @@ func Clear(value string) (cleared string, changed bool) {
 		return "", value != ""
 	}
 
-	for p := range rules.MatchingProviders(value) {
-		cleared, ok := clearProvider(p, value)
-		value = cleared
-		changed = changed || ok
-	}
-	return value, changed
-}
+	providers := slices.Values(slices.Collect(rules.MatchingProviders(value)))
 
-func clearProvider(p rules.Provider, value string) (cleared string, changed bool) {
-	for _, rule := range p.RawRules {
+	for rule := range allRawRules(providers) {
 		old := value
 		value = rule.ReplaceAllLiteralString(value, "")
 		changed = changed || value != old
@@ -37,7 +33,7 @@ func clearProvider(p rules.Provider, value string) (cleared string, changed bool
 	}
 	query := parsed.Query()
 
-	for _, rule := range p.Rules {
+	for rule := range allRules(providers) {
 		for k := range query {
 			if rule.MatchString(k) {
 				changed = true
@@ -50,4 +46,28 @@ func clearProvider(p rules.Provider, value string) (cleared string, changed bool
 
 	parsed.RawQuery = query.Encode()
 	return parsed.String(), changed
+}
+
+func allRawRules(providers iter.Seq[rules.Provider]) iter.Seq[*regexp.Regexp] {
+	return func(yield func(*regexp.Regexp) bool) {
+		for p := range providers {
+			for _, rule := range p.RawRules {
+				if !yield(rule) {
+					return
+				}
+			}
+		}
+	}
+}
+
+func allRules(providers iter.Seq[rules.Provider]) iter.Seq[*regexp.Regexp] {
+	return func(yield func(*regexp.Regexp) bool) {
+		for p := range providers {
+			for _, rule := range p.Rules {
+				if !yield(rule) {
+					return
+				}
+			}
+		}
+	}
 }
