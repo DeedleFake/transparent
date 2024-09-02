@@ -16,13 +16,9 @@ var testProvider = rules.Provider{
 	Exceptions:        []*regexp.Regexp{regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?amazon(?:\.[a-z]{2,}){1,}\/gp\/.*?(?:redirector.html|cart\/ajax-update.html|video\/api\/)`), regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?amazon(?:\.[a-z]{2,}){1,}\/(?:hz\/reviews-render\/ajax\/|message-us\?|s\?)`)},
 }
 
-func TestClear(t *testing.T) {
-	const before = "https://amazon.com/something?ref=3&pf_rd_q=5&other=2"
-	after, ok := testProvider.Clear(before)
-	if !ok {
-		t.Fatalf("%q -> %q", before, after)
-	}
-	if after != "https://amazon.com/something?other=2" {
-		t.Fatalf("%q -> %q", before, after)
+func TestProvioder(t *testing.T) {
+	const url = "https://amazon.com/something?ref=3&pf_rd_q=5&other=2"
+	if !testProvider.Matches(url) {
+		t.Fatal("didn't match")
 	}
 }

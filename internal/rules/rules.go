@@ -3,7 +3,7 @@ package rules
 //go:generate go run deedles.dev/transparent/internal/cmd/genrules -out rules_gen.go
 
 import (
-	"net/url"
+	"iter"
 	"regexp"
 )
 
@@ -18,43 +18,26 @@ type Provider struct {
 	ForceRedirection  bool
 }
 
-func (p *Provider) Clear(value string) (cleared string, changed bool) {
+func (p Provider) Matches(value string) bool {
 	if !p.URLPattern.MatchString(value) {
-		return value, false
+		return false
 	}
 	for _, exception := range p.Exceptions {
 		if exception.MatchString(value) {
-			return value, false
+			return false
 		}
 	}
+	return true
+}
 
-	if p.CompleteProvider {
-		return "", true
-	}
-
-	for _, rule := range p.RawRules {
-		old := value
-		value = rule.ReplaceAllLiteralString(value, "")
-		changed = changed || value != old
-	}
-
-	parsed, err := url.Parse(value)
-	if err != nil {
-		return value, changed
-	}
-	query := parsed.Query()
-
-	for _, rule := range p.Rules {
-		for k := range query {
-			if rule.MatchString(k) {
-				changed = true
-				query.Del(k)
+func MatchingProviders(value string) iter.Seq[Provider] {
+	return func(yield func(Provider) bool) {
+		for _, p := range Providers {
+			if p.Matches(value) {
+				if !yield(p) {
+					return
+				}
 			}
 		}
-
-		// TODO: Handle fragments, too.
 	}
-
-	parsed.RawQuery = query.Encode()
-	return parsed.String(), changed
 }
