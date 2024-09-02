@@ -26,14 +26,6 @@ var Providers = []Provider{
 		Redirections:     []*regexp.Regexp{regexp.MustCompile(`^https?:\/\/test\.clearurls\.xyz\/void\/index\.html\?url=([^&]*)`)},
 	},
 	{
-		URLPattern:       regexp.MustCompile(`^https?:\/\/kevinroebert\.gitlab\.io\/ClearUrls\/void\/block\.svg`),
-		CompleteProvider: true,
-	},
-	{
-		URLPattern:       regexp.MustCompile(`^https?:\/\/test\.clearurls\.xyz\/void\/block\.svg`),
-		CompleteProvider: true,
-	},
-	{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?linkedin\.com`),
 		CompleteProvider: false,
 		Rules:            []*regexp.Regexp{regexp.MustCompile(`^refId$`), regexp.MustCompile(`^trk$`), regexp.MustCompile(`^li[a-z]{2}$`), regexp.MustCompile(`^trackingId$`)},
@@ -67,14 +59,6 @@ var Providers = []Provider{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?admitad\.com`),
 		CompleteProvider: false,
 		Redirections:     []*regexp.Regexp{regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?admitad\.com.*ulp=([^&]*)`)},
-	},
-	{
-		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?adsensecustomsearchads(?:\.[a-z]{2,}){1,}`),
-		CompleteProvider: true,
-	},
-	{
-		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?adtech(?:\.[a-z]{2,}){1,}`),
-		CompleteProvider: true,
 	},
 	{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?agata88\.com`),
@@ -130,12 +114,6 @@ var Providers = []Provider{
 		Rules:             []*regexp.Regexp{regexp.MustCompile(`^p[fd]_rd_[a-z]*$`), regexp.MustCompile(`^qid$`), regexp.MustCompile(`^srs?$`), regexp.MustCompile(`^__mk_[a-z]{1,3}_[a-z]{1,3}$`), regexp.MustCompile(`^spIA$`), regexp.MustCompile(`^ms3_c$`), regexp.MustCompile(`^[a-z%0-9]*ie$`), regexp.MustCompile(`^refRID$`), regexp.MustCompile(`^colii?d$`), regexp.MustCompile(`^[^a-z%0-9]adId$`), regexp.MustCompile(`^qualifier$`), regexp.MustCompile(`^_encoding$`), regexp.MustCompile(`^smid$`), regexp.MustCompile(`^field-lbr_brands_browse-bin$`), regexp.MustCompile(`^ref_?$`), regexp.MustCompile(`^th$`), regexp.MustCompile(`^sprefix$`), regexp.MustCompile(`^crid$`), regexp.MustCompile(`^cv_ct_[a-z]+$`), regexp.MustCompile(`^linkCode$`), regexp.MustCompile(`^creativeASIN$`), regexp.MustCompile(`^ascsubtag$`), regexp.MustCompile(`^aaxitk$`), regexp.MustCompile(`^hsa_cr_id$`), regexp.MustCompile(`^sb-ci-[a-z]+$`), regexp.MustCompile(`^rnid$`), regexp.MustCompile(`^dchild$`), regexp.MustCompile(`^camp$`), regexp.MustCompile(`^creative$`)},
 		RawRules:          []*regexp.Regexp{regexp.MustCompile(`\/ref=[^/?]*`)},
 		ReferralMarketing: []*regexp.Regexp{regexp.MustCompile(`tag`)},
-	},
-	{
-		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?amazon-adsystem(?:\.[a-z]{2,}){1,}`),
-		CompleteProvider: true,
-		Exceptions:       []*regexp.Regexp{regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?amazon-adsystem(?:\.[a-z]{2,}){1,}\/v3\/oor\?`)},
-		Redirections:     []*regexp.Regexp{regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?amazon-adsystem(?:\.[a-z]{2,}){1,}\/x\/c\/.+?\/([^&]+)`)},
 	},
 	{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?anonym\.to`),
@@ -197,10 +175,6 @@ var Providers = []Provider{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?bestbuy\.com`),
 		CompleteProvider: false,
 		Rules:            []*regexp.Regexp{regexp.MustCompile(`^irclickid$`), regexp.MustCompile(`^irgwc$`), regexp.MustCompile(`^loc$`), regexp.MustCompile(`^acampID$`), regexp.MustCompile(`^mpid$`), regexp.MustCompile(`^intl$`)},
-	},
-	{
-		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?bf-ad(?:\.[a-z]{2,}){1,}`),
-		CompleteProvider: true,
 	},
 	{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?bigfishgames\.com`),
@@ -274,10 +248,6 @@ var Providers = []Provider{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?cnet\.com`),
 		CompleteProvider: false,
 		Rules:            []*regexp.Regexp{regexp.MustCompile(`^ftag$`)},
-	},
-	{
-		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?contentpass\.(?:net|de)`),
-		CompleteProvider: true,
 	},
 	{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?curseforge\.com`),
@@ -394,10 +364,6 @@ var Providers = []Provider{
 		Rules:            []*regexp.Regexp{regexp.MustCompile(`^otracker.?$`), regexp.MustCompile(`^ssid$`), regexp.MustCompile(`^[cilp]id$`), regexp.MustCompile(`^marketplace$`), regexp.MustCompile(`^store$`), regexp.MustCompile(`^srno$`), regexp.MustCompile(`^store$`), regexp.MustCompile(`^ppn$`), regexp.MustCompile(`^ppt$`), regexp.MustCompile(`^fm$`), regexp.MustCompile(`^collection-tab-name$`), regexp.MustCompile(`^sattr\[\]$`), regexp.MustCompile(`^p\[\]$`), regexp.MustCompile(`^st$`)},
 	},
 	{
-		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?fls-na\.amazon(?:\.[a-z]{2,}){1,}`),
-		CompleteProvider: true,
-	},
-	{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?gamespot\.com`),
 		CompleteProvider: false,
 		Rules:            []*regexp.Regexp{regexp.MustCompile(`^PostType$`), regexp.MustCompile(`^ServiceType$`), regexp.MustCompile(`^ftag$`), regexp.MustCompile(`^UniqueID$`), regexp.MustCompile(`^TheTime$`)},
@@ -457,10 +423,6 @@ var Providers = []Provider{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?googleadservices\.com`),
 		CompleteProvider: false,
 		Redirections:     []*regexp.Regexp{regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?googleadservices\.com\/.*?adurl=([^&]*)`)},
-	},
-	{
-		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?googlesyndication\.com`),
-		CompleteProvider: true,
 	},
 	{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?govdelivery\.com`),
@@ -998,14 +960,6 @@ var Providers = []Provider{
 		Redirections:     []*regexp.Regexp{regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?youtube\.com\/redirect?.*?q=([^&]*)`)},
 	},
 	{
-		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?youtube\.com\/api\/stats\/ads`),
-		CompleteProvider: true,
-	},
-	{
-		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?youtube\.com\/pagead`),
-		CompleteProvider: true,
-	},
-	{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?zillow\.com`),
 		CompleteProvider: false,
 		Rules:            []*regexp.Regexp{regexp.MustCompile(`^rtoken$`)},
@@ -1014,5 +968,54 @@ var Providers = []Provider{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?zoho\.com`),
 		CompleteProvider: false,
 		Rules:            []*regexp.Regexp{regexp.MustCompile(`^iref$`)},
+	},
+}
+
+var CompleteProviders = []Provider{
+	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/kevinroebert\.gitlab\.io\/ClearUrls\/void\/block\.svg`),
+		CompleteProvider: true,
+	},
+	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/test\.clearurls\.xyz\/void\/block\.svg`),
+		CompleteProvider: true,
+	},
+	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?adsensecustomsearchads(?:\.[a-z]{2,}){1,}`),
+		CompleteProvider: true,
+	},
+	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?adtech(?:\.[a-z]{2,}){1,}`),
+		CompleteProvider: true,
+	},
+	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?amazon-adsystem(?:\.[a-z]{2,}){1,}`),
+		CompleteProvider: true,
+		Exceptions:       []*regexp.Regexp{regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?amazon-adsystem(?:\.[a-z]{2,}){1,}\/v3\/oor\?`)},
+		Redirections:     []*regexp.Regexp{regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?amazon-adsystem(?:\.[a-z]{2,}){1,}\/x\/c\/.+?\/([^&]+)`)},
+	},
+	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?bf-ad(?:\.[a-z]{2,}){1,}`),
+		CompleteProvider: true,
+	},
+	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?contentpass\.(?:net|de)`),
+		CompleteProvider: true,
+	},
+	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?fls-na\.amazon(?:\.[a-z]{2,}){1,}`),
+		CompleteProvider: true,
+	},
+	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?googlesyndication\.com`),
+		CompleteProvider: true,
+	},
+	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?youtube\.com\/api\/stats\/ads`),
+		CompleteProvider: true,
+	},
+	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?youtube\.com\/pagead`),
+		CompleteProvider: true,
 	},
 }

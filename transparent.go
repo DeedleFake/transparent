@@ -12,11 +12,11 @@ import (
 //
 // If value is not a valid URL, the results are undefined.
 func Clear(value string) (cleared string, changed bool) {
-	for p := range rules.MatchingProviders(value) {
-		if p.CompleteProvider {
-			return "", true
-		}
+	if rules.CompleteProviderMatches(value) {
+		return "", value != ""
+	}
 
+	for p := range rules.MatchingProviders(value) {
 		cleared, ok := clearProvider(p, value)
 		value = cleared
 		changed = changed || ok

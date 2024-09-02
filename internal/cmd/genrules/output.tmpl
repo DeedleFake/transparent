@@ -7,7 +7,7 @@ import (
 )
 
 var Providers = []Provider{
-	{{- range .Providers}}
+	{{- range .Providers}}{{if not .CompleteProvider}}
 		{
 			URLPattern: regexp.MustCompile(`{{.URLPattern}}`),
 			CompleteProvider: {{.CompleteProvider}},
@@ -18,5 +18,20 @@ var Providers = []Provider{
 			{{- with .Redirections}}Redirections: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{"\n"}}{{end}}
 			{{- with .ForceRedirection}}ForceRedirection: {{.}},{{end}}
 		},
-	{{- end}}
+	{{- end}}{{end}}
+}
+
+var CompleteProviders = []Provider{
+	{{- range .Providers}}{{if .CompleteProvider}}
+		{
+			URLPattern: regexp.MustCompile(`{{.URLPattern}}`),
+			CompleteProvider: {{.CompleteProvider}},
+			{{with .Rules}}Rules: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`^{{.}}$`),{{end}} },{{"\n"}}{{end}}
+			{{- with .RawRules}}RawRules: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{"\n"}}{{end}}
+			{{- with .ReferralMarketing}}ReferralMarketing: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{"\n"}}{{end}}
+			{{- with .Exceptions}}Exceptions: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{"\n"}}{{end}}
+			{{- with .Redirections}}Redirections: []*regexp.Regexp{ {{range .}}regexp.MustCompile(`{{.}}`),{{end}} },{{"\n"}}{{end}}
+			{{- with .ForceRedirection}}ForceRedirection: {{.}},{{end}}
+		},
+	{{- end}}{{end}}
 }

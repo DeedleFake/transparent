@@ -41,3 +41,12 @@ func MatchingProviders(value string) iter.Seq[Provider] {
 		}
 	}
 }
+
+func CompleteProviderMatches(value string) bool {
+	for _, p := range CompleteProviders {
+		if p.Matches(value) {
+			return true
+		}
+	}
+	return false
+}
