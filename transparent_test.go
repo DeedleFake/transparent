@@ -19,7 +19,7 @@ func TestClear(t *testing.T) {
 
 func BenchmarkClear(b *testing.B) {
 	const url = "https://x.com/user/status/12389123719273?t=klasdhklashdask&s=33"
-	for range b.N {
+	for b.Loop() {
 		_, _ = transparent.Clear(url)
 	}
 }
