@@ -640,6 +640,11 @@ var Providers = []Provider{
 		Rules:            []*regexp.Regexp{regexp.MustCompile(`^adid$`), regexp.MustCompile(`^i_cid$`), regexp.MustCompile(`^n_cid$`), regexp.MustCompile(`^waad$`)},
 	},
 	{
+		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?nordwolle\.com`),
+		CompleteProvider: false,
+		Rules:            []*regexp.Regexp{regexp.MustCompile(`^_sc$`), regexp.MustCompile(`^_sid$`), regexp.MustCompile(`^_ss$`)},
+	},
+	{
 		URLPattern:       regexp.MustCompile(`^https?:\/\/(?:[a-z0-9-]+\.)*?norml\.org`),
 		CompleteProvider: false,
 		Rules:            []*regexp.Regexp{regexp.MustCompile(`^link_id$`), regexp.MustCompile(`^can_id$`), regexp.MustCompile(`^source$`), regexp.MustCompile(`^email_referrer$`), regexp.MustCompile(`^email_subject$`)},
